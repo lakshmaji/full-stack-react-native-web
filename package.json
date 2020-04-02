@@ -1,0 +1,13 @@
+{
+  "name": "myReactApp",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "dependencies": {
+    "react-native": "0.62.0"
+  }
+}
