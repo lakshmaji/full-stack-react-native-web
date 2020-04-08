@@ -32,53 +32,107 @@ module.exports = function override(config, env) {
   config.module.rules[1] = null;
   config.module.rules[2].oneOf[1].include = appIncludes;
   config.module.rules[2].oneOf[1].options.plugins = [
-    require.resolve("babel-plugin-react-native-web")
+    require.resolve("babel-plugin-react-native-web"),
+    require.resolve("babel-plugin-inline-react-svg")
   ].concat(config.module.rules[2].oneOf[1].options.plugins);
   config.module.rules = config.module.rules.filter(Boolean);
   config.plugins.push(
     new webpack.DefinePlugin({ __DEV__: env !== "production" })
   );
 
-  config.module.rules.push({
-    test: /\.js$/,
-    exclude: /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view)/,
-    use: {
-      loader: "babel-loader",
-      options: {
-        // Disable reading babel configuration
-        babelrc: false,
-        configFile: false,
+  // config.module.rules.push({
+  //   test: /\.js$/,
+  //   exclude: /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view)/,
+  //   use: {
+  //     loader: "babel-loader",
+  //     options: {
+  //       // Disable reading babel configuration
+  //       babelrc: false,
+  //       configFile: false,
 
-        // The configuration for compilation
-        presets: [
-          ["@babel/preset-env", { useBuiltIns: "usage" }],
-          "@babel/preset-react",
-          "@babel/preset-flow",
-          "@babel/preset-typescript"
-        ],
-        plugins: [
-          "@babel/plugin-proposal-class-properties",
-          "@babel/plugin-proposal-object-rest-spread"
-        ]
+  //       // The configuration for compilation
+  //       presets: [
+  //         ["@babel/preset-env", { useBuiltIns: "usage" }],
+  //         "@babel/preset-react",
+  //         "@babel/preset-flow",
+  //         "@babel/preset-typescript"
+  //       ],
+  //       plugins: [
+  //         "@babel/plugin-proposal-class-properties",
+  //         "@babel/plugin-proposal-object-rest-spread"
+  //       ]
+  //     }
+  //   }
+  // });
+  const imageLoaderConfiguration = {
+    test: /\.(gif|jpe?g|png|svg)$/,
+    use: {
+      loader: 'url-loader',
+      options: {
+        name: '[name].[ext]'
       }
     }
-  });
+  };
 
-  config.module.rules.concat([
+  const defaultRules = config.module.rules;
+  config.module.rules = defaultRules.concat([
     {
-      test: /\.svg$/,
+      test: /\.js$/,
       exclude: /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view)/,
-      use: [
-        {
-          loader: "@svgr/webpack"
+      use: {
+        loader: "babel-loader",
+        options: {
+          // Disable reading babel configuration
+          babelrc: false,
+          configFile: false,
+
+          // The configuration for compilation
+          presets: [
+            ["@babel/preset-env", { useBuiltIns: "usage" }],
+            "@babel/preset-react",
+            "@babel/preset-flow",
+            "@babel/preset-typescript"
+          ],
+          plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "@babel/plugin-proposal-object-rest-spread"
+          ]
         }
-      ]
+      }
     },
-    {
-      test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
-      loader: "file-loader"
-    }
+    // imageLoaderConfiguration
+    // {
+    //   test: /\.svg$/,
+    //   use: ['@svgr/webpack'],
+    // },
+    // {
+    //   test: /\.svg$/,
+    //   use: [
+    //     {
+    //       loader: "babel-loader"
+    //     },
+    //     {
+    //       loader: "react-svg-loader",
+    //       options: {
+    //         // jsx: true // true outputs JSX tags
+    //       }
+    //     }
+    //   ]
+    // }
   ]);
 
+
+
+
+  // config.module.rules.push(
+  // {
+  //   test: /\.svg$/,
+  //   loader: "file-loader"
+  // });
+
+  setTimeout(() => {
+
+    console.log('config bello -----------------------------------', config)
+  }, 3000)
   return config;
 };
