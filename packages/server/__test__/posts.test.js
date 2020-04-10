@@ -24,6 +24,11 @@ describe("load app instance and get token", () => {
         }
     })
 
+    // This works too
+    // beforeEach(async () => {
+    //     jest.setTimeout(60000)
+    // })
+
     describe("App base api check", () => {
         it("tests the base route and returns true for status", async () => {
             const response = await supertest(server).get('/');
@@ -38,36 +43,36 @@ describe("load app instance and get token", () => {
             const response = await supertest(server).post('/api/posts').send({
                 title: 'Bhagavad gita',
                 postContent: 'The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata. ',
-                createdBy: 'Some mock user'
             });
             expect(response.status).toBe(401);
             expect(response.body.message).toBe('No token provided.');
         })
 
-        // it("Should return empty posts ", async () => {
-        //     const response = await supertest(server).get('/api/posts');
-        //     expect(response.status).toBe(200);
-        //     expect(response.body);
-        //     expect(response.body.length).toBe(0);
-        // })
+        it("Should return empty posts ", async () => {
+            const response = await supertest(server).get('/api/posts');
+            expect(response.status).toBe(200);
+            expect(response.body);
+            expect(response.body.length).toBe(0);
+        })
 
         it("Should be able to create a post", async () => {
-            const response = await supertest(server).post('/api/posts')
-                .set('Authorization', `Bearer ${token}`)
+            // https://github.com/visionmedia/supertest/issues/398#issuecomment-366403045 -> related headers
+            const response = await supertest(server)
+                .post('/api/posts')
                 .send({
                     title: 'Bhagavad gita',
                     postContent: 'The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata. ',
-                    createdBy: 'Some mock user'
-                });
+                })
+                .set('Authorization', `Bearer ${token}`);
+            console.log(response.body)
             expect(response.status).toBe(200);
-            expect(response.type).toBe('application/json');
-        })
+            // expect(response.type).toBe('application/json');
+        }, 10000)
 
         it("Should be able to get posts ", async () => {
             const response = await supertest(server).get('/api/posts');
             expect(response.status).toBe(200);
-            expect(response.body);
-            // console.log('--------', response.body, token)
+            expect(response.body.length).toBe(1);
         })
 
     })
