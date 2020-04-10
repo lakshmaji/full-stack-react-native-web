@@ -1,8 +1,9 @@
 import axios from "axios";
 import errorExtractor from './ErrorExtractor';
+import store from '../state/store';
 
 
-const API_BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+const API_BASE_URL = 'https://jsonplaceholder.typicode.com/';
 
 
 const Api = {
@@ -88,6 +89,10 @@ function buildHeaders(headers) {
 function request(props) {
   const { url, init, query, option, successCallback, errorCallback } = props;
   const fetchUrl = `${API_BASE_URL}${url}`;
+
+  const state= store.getState();
+
+  console.log('redux state ', state)
 
   return axios({
     url: fetchUrl,

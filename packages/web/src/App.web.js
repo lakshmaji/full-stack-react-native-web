@@ -22,7 +22,7 @@ import Toast from "commons/src/components/Toast";
 
 const RootComponent = () => {
     useAuthCheck();
-    Geocoder.init("AIzaSyCylaQ5vV4-FKZ9SyJUYhOy_EBfJ_0_SUE");
+    // Geocoder.init("AIzaSyCylaQ5vV4-FKZ9SyJUYhOy_EBfJ_0_SUE");
     return <Suspense fallback={""}>
         <Switch>
             {RoutesDefinitions.map((route, idx) => {

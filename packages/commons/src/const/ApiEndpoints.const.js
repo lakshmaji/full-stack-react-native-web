@@ -1,13 +1,15 @@
 export class ApiEndpoints {
 
-    static BASE_URL = 'http://staging.example.com';
-
     static removeWhiteSpaces(urlString) {
         return urlString.replace(/^\s+|\s+$/gm, '');
     }
 
-    static PORTAL_CONFIG() {
-        return this.removeWhiteSpaces(`/core/config/portal_config`);
+    static GET_ALL_COMMENTS() {
+        return this.removeWhiteSpaces(`comments`);
+    }
+
+    static GET_ALL_POSTS() {
+        return this.removeWhiteSpaces(`posts`);
     }
 
 }
