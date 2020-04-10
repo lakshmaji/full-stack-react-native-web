@@ -4,4 +4,5 @@ export const ROUTES = {
     DASHBOARD: 'Dashboard',
     POSTS: 'Posts',
     CREATE_POST: 'CreatePost',
+    POST_DETAIL: 'PostDetail',
 };

@@ -8,6 +8,10 @@ const reducer = (state = initialState, action) => {
       return action.payload;
     case types.CREATE_POST_SUCCESS:
       return [...state, action.payload]
+    case types.DELETE_POST_SUCCESS:
+      return state.filter(ePost => ePost._id !== action.payload.id)
+    case types.GET_POST_SUCCESS:
+      return [...state, action.payload]
     default:
       return state;
   }

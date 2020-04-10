@@ -4,4 +4,5 @@ export const ROUTES = {
     DASHBOARD: '/dashboard/:userId/theme/:themeMode',
     POSTS: '/posts',
     CREATE_POST: '/create-post',
+    POST_DETAIL: '/post/:id',
 };

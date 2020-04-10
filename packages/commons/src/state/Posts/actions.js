@@ -30,8 +30,42 @@ const createPost = (
   errorCallback,
 });
 
+const deletePost = (
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback
+) => ({
+  type: types.DELETE_POST,
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback,
+});
+
+
+const getPost = (
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback
+) => ({
+  type: types.GET_POST,
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback,
+});
+
+
 
 export default {
   getAllPosts,
-  createPost
+  createPost,
+  deletePost,
+  getPost
 };

@@ -1,5 +1,5 @@
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var config = require('../config'); // get our config file
+const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const config = require('../config'); // get our config file
 
 function verifyToken(req, res, next) {
 
@@ -13,9 +13,8 @@ function verifyToken(req, res, next) {
 
   // verifies secret and checks exp
   jwt.verify(token, config.secret, function (err, decoded) {
-    console.log(decoded)
     if (err)
-      return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      return res.status(401).send({ auth: false, message: config.tokenMessages[(err || {}).name] || 'Failed to authenticate token.' });
 
     // if everything is good, save to request for use in other routes
     req.userId = decoded.id;
