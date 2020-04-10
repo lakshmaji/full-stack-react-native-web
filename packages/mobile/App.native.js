@@ -1,26 +1,21 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Dashboard } from 'commons/src/views/Dashboard';
-import RecykalMobile from 'commons/src/components/Recykal.mobile';
+import Dashboard from 'commons/src/views/Dashboard';
 import { Provider } from 'react-redux';
 import store, { persistor } from 'commons/src/state/store';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { appTheme } from 'commons/src/const/Theme';
-import { LoginContainer as Login } from 'commons/src/views/Login/LoginContainer';
-import { RegisterSuccess } from 'commons/src/views/Register/RegisterSuccess';
+import Login from 'commons/src/views/Login';
 import Register from 'commons/src/views/Register';
-import LoginWithEmail from 'commons/src/views/Login/LoginWithEmail';
+import Posts from 'commons/src/views/Posts';
+import CreatePost from 'commons/src/views/CreatePost';
+import SvgExample from 'commons/src/views/SvgExample';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useAuthCheck } from 'commons/src/hooks/use-auth-check';
 import { AuthCheck } from 'commons/src/views/AuthCheck'
-// Define new routes / screens here
-const SCREENS_WITH_NO_HEADER = {
-};
 
-const SCREENS_WITH_HEADER = {
-  Dashboard,
-};
+
 
 const getScreenWithNavOptions = (screens, headerShown = true) =>
   Object.keys(screens).reduce(
@@ -36,11 +31,21 @@ const getScreenWithNavOptions = (screens, headerShown = true) =>
     {},
   );
 
+
+// Define new routes / screens here
+const MAIN_SCREENS_WITH_NO_HEADER = {
+  SvgExample,
+  Posts,
+  CreatePost
+};
+
+const MAIN_SCREENS_WITH_HEADER = {
+  Dashboard,
+};
 const MainNavigator = createStackNavigator(
   {
-    Recykal: RecykalMobile,
-    ...getScreenWithNavOptions(SCREENS_WITH_NO_HEADER, false),
-    ...getScreenWithNavOptions(SCREENS_WITH_HEADER),
+    ...getScreenWithNavOptions(MAIN_SCREENS_WITH_NO_HEADER, false),
+    ...getScreenWithNavOptions(MAIN_SCREENS_WITH_HEADER),
   },
   {
     initialRouteName: 'Dashboard',
@@ -49,9 +54,7 @@ const MainNavigator = createStackNavigator(
 
 const AUTH_SCREENS_WITH_NO_HEADER = {
   Login,
-  RegisterSuccess,
   Register,
-  LoginWithEmail,
 };
 
 const AuthNavigator = createStackNavigator({ ...getScreenWithNavOptions(AUTH_SCREENS_WITH_NO_HEADER, false) }, {

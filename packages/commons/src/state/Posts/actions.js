@@ -15,6 +15,23 @@ const getAllPosts = (
   errorCallback,
 });
 
+const createPost = (
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback
+) => ({
+  type: types.CREATE_POST,
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback,
+});
+
+
 export default {
   getAllPosts,
+  createPost
 };

@@ -107,6 +107,9 @@ const styles = StyleSheet.create({
     textArea: {
         height: 80,
     },
+    button: {
+
+    }
 });
 
 export default withTheme(Login);

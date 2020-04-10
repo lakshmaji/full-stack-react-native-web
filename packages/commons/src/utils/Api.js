@@ -124,17 +124,17 @@ let onError = (error) => {
   if (error.response) {
     console.warn('API Error Response', error.response);
     if (error.response.status === 0) {
-      store.dispatch(errorActions.raiseError('Please check if you are connected to Internet'));
+      // store.dispatch(errorActions.raiseError('Please check if you are connected to Internet'));
     }
     if (error.response.status < 500) {
       const err = errorExtractor(error.response);
-      store.dispatch(errorActions.raiseWarning(err.message));
+      // store.dispatch(errorActions.raiseWarning(err.message));
       if (error.response.status === 401) {
         store.dispatch(userActions.updateToken(null))
       }
     } else {
       const err = errorExtractor(error.response);
-      store.dispatch(errorActions.raiseError(err.message));
+      // store.dispatch(errorActions.raiseError(err.message));
     }
   }
   throw error;

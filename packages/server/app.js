@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 app.use(cors());
 app.options('*', cors());
+app.use(bodyParser.json());
 
 const db = require('./db');
 global.__root = __dirname + '/';
