@@ -12,6 +12,10 @@ export class ApiEndpoints {
         return this.removeWhiteSpaces(`posts`);
     }
 
+    static CREATE_POSTS() {
+        return this.removeWhiteSpaces(`posts`);
+    }
+
     static REGISTER() {
         return this.removeWhiteSpaces(`auth/register`);
     }

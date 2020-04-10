@@ -8,6 +8,20 @@ router.use(bodyParser.urlencoded({ extended: true }));
 var Post = require('./Post');
 
 
+// CREATES A NEW POST
+router.post('/', VerifyToken, function (req, res) {
+    console.log('belo', req)
+    Post.create({
+        title: req.body.title,
+        postContent: req.body.postContent,
+        createdBy: req.userName
+    },
+        function (err, post) {
+            if (err) return res.status(500).send("There was a problem adding the information to the database.");
+            res.status(200).send(post);
+        });
+});
+
 // RETURNS ALL THE POSTS IN THE DATABASE
 router.get('/', function (req, res) {
     Post.find({}, function (err, posts) {

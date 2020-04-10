@@ -1,14 +1,11 @@
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Text, View, StyleSheet } from "react-native";
 import { useNavigation } from "../hooks/use-navigation";
 import { ROUTES } from "../const/Routes";
-import { Button } from "react-native-paper";
+import { Button, withTheme } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import userActions from "../state/User/actions";
-import { useAuthCheck } from '../hooks/use-auth-check'
 
-export const Dashboard = () => {
+const Dashboard = () => {
     const {
         navigateTo,
         getState,
@@ -20,7 +17,10 @@ export const Dashboard = () => {
         getQueryParams,
         getRouteParams
     } = useNavigation();
-    useAuthCheck()
+
+    useEffect(() => {
+        console.log('Dashboard component mounted')
+    })
 
     console.log('bello outputs from Dashboard isWeb:::::::::::', isWeb)
     console.log('bello outputs from Dashboard routeDetails:::::::::::', routeDetails)
@@ -39,10 +39,24 @@ export const Dashboard = () => {
     const raiseError = () => {
         throw new Error('Error text');
     }
+
+    const navigateToPosts = () => navigateTo(ROUTES.POSTS);
     return <View>
-        <Text>From Dashboard (mobile only)</Text>
-        <Button onPress={() => navigateTo(ROUTES.ONBOARDING)}>Go to onboarding</Button>
-        <Button onPress={() => raiseError()}>Raise Error</Button>
-        <Icon name="rocket" size={30} color="#900" />
+        <Text> Dashboard</Text>
+        <Button mode="contained" onPress={navigateToPosts} style={[styles.button, styles.inputContainerStyle]}>
+            List Posts
+        </Button>
+
     </View>
 };
+
+const styles = StyleSheet.create({
+    inputContainerStyle: {
+        margin: 8,
+    },
+    button: {
+
+    }
+});
+
+export default withTheme(Dashboard);

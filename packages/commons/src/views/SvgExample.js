@@ -8,24 +8,24 @@
 
 import React from 'react';
 import { SafeAreaView, ScrollView, View, Image } from 'react-native';
-import Autocode from '../../../logos/autocode.svg';
-import Bower from '../../../logos/bower.svg';
-import Composer from '../../../logos/composer.svg';
-import Drupal from '../../../logos/drupal.svg';
-import Egghead from '../../../logos/egghead.svg';
-import Ember from '../../../logos/ember.svg';
-import Firefox from '../../../logos/firefox.svg';
-import Hostgator from '../../../logos/hostgator.svg';
-import Pug from '../../../logos/pug.svg';
-import ReduxObservable from '../../../logos/redux-observable.svg';
-import RubyMine from '../../../logos/rubymine.svg';
-import Snyk from '../../../logos/snyk.svg';
-import Stylelint from '../../../logos/stylelint.svg';
-import Address from "../../../logos/address.svg";
-import Success from "../../../logos/success.svg";
+import Autocode from '../../logos/autocode.svg';
+import Bower from '../../logos/bower.svg';
+import Composer from '../../logos/composer.svg';
+import Drupal from '../../logos/drupal.svg';
+import Egghead from '../../logos/egghead.svg';
+import Ember from '../../logos/ember.svg';
+import Firefox from '../../logos/firefox.svg';
+import Hostgator from '../../logos/hostgator.svg';
+import Pug from '../../logos/pug.svg';
+import ReduxObservable from '../../logos/redux-observable.svg';
+import RubyMine from '../../logos/rubymine.svg';
+import Snyk from '../../logos/snyk.svg';
+import Stylelint from '../../logos/stylelint.svg';
+import Address from "../../logos/address.svg";
+import Success from "../../logos/success.svg";
 import { Button, List, withTheme, Theme } from 'react-native-paper';
 
-const Login = ({ theme }) => {
+const SvgExample = ({ theme }) => {
     const title = 'Button'
     const { colors } = theme;
 
@@ -161,7 +161,7 @@ const Login = ({ theme }) => {
             </Button>
                         <Button
                             mode="outlined"
-                            icon={require('../../../images/favorite.png')}
+                            icon={require('../../images/favorite.png')}
                             onPress={() => { }}
                             style={styles.button}
                         >
@@ -171,7 +171,7 @@ const Login = ({ theme }) => {
                             mode="outlined"
                             icon={({ size }) => (
                                 <Image
-                                    source={require('../../../images/chameleon.png')}
+                                    source={require('../../images/chameleon.png')}
                                     style={{ width: size, height: size, borderRadius: size / 2 }}
                                 />
                             )}
@@ -231,4 +231,4 @@ const styles = {
     },
 };
 
-export default withTheme(Login);
+export default withTheme(SvgExample);

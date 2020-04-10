@@ -13,13 +13,35 @@ function* getAllPosts(action) {
       action.successCallback,
       action.errorCallback
     );
-    yield put({
-      type: types.GET_ALL_POSTS_SUCCESS,
-      payload: response.data,
-    });
-  } catch (error) {}
+    if (response.data && response.data.length) {
+      yield put({
+        type: types.GET_ALL_POSTS_SUCCESS,
+        payload: response.data,
+      });
+    }
+  } catch (error) { }
+}
+
+function* createPost(action) {
+  try {
+    const response = yield call(
+      API.post,
+      ApiEndpoints.CREATE_POSTS(),
+      action.payload,
+      action.queryParams,
+      action.successCallback,
+      action.errorCallback
+    );
+    if (response.data) {
+      yield put({
+        type: types.CREATE_POST_SUCCESS,
+        payload: response.data
+      });
+    }
+  } catch (error) { }
 }
 
 export function* watchUser() {
   yield all([takeLatest(types.GET_ALL_POSTS, getAllPosts)]);
+  yield all([takeLatest(types.CREATE_POST, createPost)]);
 }

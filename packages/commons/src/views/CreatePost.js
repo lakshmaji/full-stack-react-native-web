@@ -12,15 +12,14 @@ import { Button, withTheme, TextInput } from 'react-native-paper';
 import { useNavigation } from '../hooks/use-navigation'
 import { ROUTES } from '../const/Routes'
 import { useDispatch } from 'react-redux'
-import userActions from '../state/User/actions'
+import postActions from '../state/Posts/actions'
 
-const Register = ({ theme }) => {
-    const { navigateTo } = useNavigation();
+const CreatePost = ({ theme }) => {
+    const { navigateTo, navigateBack } = useNavigation();
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
-        name: 'Lakshmaji',
-        email: 'lakshmaji@gmail.com',
-        password: 'Master@123'
+        title: 'Vigneshwara book',
+        postContent: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
     });
 
     const onChangeText = (key, value) =>
@@ -30,10 +29,10 @@ const Register = ({ theme }) => {
         }));
 
 
-    const navigateToLogin = () => navigateTo(ROUTES.LOGIN)
+    const navigateToPosts = () => navigateTo(ROUTES.POSTS)
 
-    const doRegister = () => {
-        dispatch(userActions.register(formData))
+    const doCreate = () => {
+        dispatch(postActions.createPost(formData, {}, {}, navigateBack))
     }
 
     return (
@@ -50,43 +49,30 @@ const Register = ({ theme }) => {
                 <TextInput
                     mode="outlined"
                     style={styles.inputContainerStyle}
-                    label="Name"
+                    label="Post Title"
                     placeholder="Type something"
-                    value={formData.email}
-                    onChangeText={text => onChangeText('name', text)}
+                    value={formData.title}
+                    onChangeText={text => onChangeText('title', text)}
                 />
 
                 <TextInput
                     mode="outlined"
                     style={styles.inputContainerStyle}
-                    label="Email"
+                    label="Post Content"
                     placeholder="Type something"
-                    value={formData.email}
-                    onChangeText={text => onChangeText('email', text)}
+                    value={formData.postContent}
+                    onChangeText={text => onChangeText('postContent', text)}
                 />
 
 
-                <TextInput
-                    mode="outlined"
-                    style={styles.inputContainerStyle}
-                    label="Password"
-                    placeholder="Type something"
-                    secureTextEntry
-                    onChangeText={text => onChangeText('password', text)}
-                    value={formData.email}
-                />
+
 
 
                 <View style={styles.row}>
-                    <Button mode="contained" onPress={doRegister} style={[styles.button, styles.inputContainerStyle]}>
-                        Register
+                    <Button mode="contained" onPress={doCreate} style={[styles.button, styles.inputContainerStyle]}>
+                        Create
                     </Button>
 
-                </View>
-                <View style={styles.row}>
-                    <Button onPress={navigateToLogin} style={styles.button}>
-                        Login
-                    </Button>
                 </View>
 
             </ScrollView>
@@ -122,4 +108,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default withTheme(Register);
+export default withTheme(CreatePost);
