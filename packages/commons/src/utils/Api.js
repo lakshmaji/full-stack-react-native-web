@@ -1,68 +1,75 @@
 import axios from "axios";
-import errorExtractor from './ErrorExtractor';
-import store from '../state/store';
+import errorExtractor from "./ErrorExtractor";
+import store from "../state/store";
+import userActions from "../state/User/actions";
 
-
-const API_BASE_URL = 'https://jsonplaceholder.typicode.com/';
-
+const API_BASE_URL = "http://127.0.0.1:3000/api/";
 
 const Api = {
   get: (url, option, query, successCallback, errorCallback) =>
     request({
       url,
       init: {
-        method: 'GET'
+        method: "GET",
       },
       query,
       option,
       successCallback,
-      errorCallback
+      errorCallback,
     }),
   post: (url, option, query, successCallback, errorCallback) =>
     request({
       url,
       init: {
-        method: 'POST'
+        method: "POST",
       },
       query,
       option,
       successCallback,
-      errorCallback
+      errorCallback,
     }),
   put: (url, option, query, successCallback, errorCallback) =>
     request({
       url,
       init: {
-        method: 'PUT'
+        method: "PUT",
       },
       query,
       option,
       successCallback,
-      errorCallback
+      errorCallback,
     }),
   patch: (url, option, query, successCallback, errorCallback) =>
     request({
       url,
       init: {
-        method: 'PATCH'
+        method: "PATCH",
       },
       query,
       option,
       successCallback,
-      errorCallback
+      errorCallback,
     }),
   delete: (url, option, query, successCallback, errorCallback) =>
     request({
       url,
       init: {
-        method: 'DELETE'
+        method: "DELETE",
       },
       query,
       option,
       successCallback,
-      errorCallback
+      errorCallback,
     }),
 };
+
+function getToken() {
+  const { user } = store.getState();
+  if (user && user.token) {
+    return user.token;
+  }
+  return;
+}
 
 /**
  * Header interceptor for each api
@@ -70,17 +77,18 @@ const Api = {
  * @return {{Authorization: string, Accept: string, "Content-Type": string}}
  */
 function buildHeaders(headers) {
-  const token =  localStorage.getItem('authenticate_token');
-  const appCode = 'EPR005';
-  const newHeader =  {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    'appCode': appCode,
+  // const token =  'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNDgwMTUiLCJhdXRoIjoiUk9MRV9DVVNUT01FUixST0xFX1BPUlRBTCIsInVzZXIiOnsidXNlcklkIjoxNDgwMTUsImZyYW5jaGlzZUlkIjo2LCJsb2dpbiI6IjE0ODAxNSIsImVtYWlsIjoicmVjeWthbHJlYWN0QHBva2VtYWlsLm5ldCJ9LCJleHAiOjE1ODgzNDU4MTN9.aO5nOAon9b3cLKjsf8QLOOtEcIRaoCuHNJtwrUi6S5-FL7qT76zRwOYg18a67vCQ9kLMLvE-LlOLOfctVYn0yQ'//localStorage.getItem('authenticate_token');
+  const token = getToken();
+  const appCode = "EPR005";
+  const newHeader = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    appCode: appCode,
     ...headers,
   };
 
   if (token) {
-    newHeader.Authorization = 'Bearer ' + token;
+    newHeader.Authorization = "Bearer " + token;
   }
 
   return newHeader;
@@ -89,25 +97,22 @@ function buildHeaders(headers) {
 function request(props) {
   const { url, init, query, option, successCallback, errorCallback } = props;
   const fetchUrl = `${API_BASE_URL}${url}`;
-
-  const state= store.getState();
-
-  console.log('redux state ', state)
-
+  const headers = buildHeaders(init.headers);
   return axios({
     url: fetchUrl,
     method: init.method,
     data: option,
     params: query,
-    headers: buildHeaders(init.headers),
+    headers,
     timeout: option && option.timeout ? option.timeout : 10000,
-  }).then(response => {
-    successCallback && successCallback(response);
-    return response;
   })
-    .catch(error => {
+    .then((response) => {
+      successCallback && successCallback(response);
+      return response;
+    })
+    .catch((error) => {
       errorCallback && errorCallback(error);
-      onError(error)
+      onError(error);
     });
 }
 
@@ -117,16 +122,20 @@ function request(props) {
  */
 let onError = (error) => {
   if (error.response) {
-      if(error.response.status === 0) {
-          //toast.warn('Please check if you are connected to Internet');
+    console.warn('API Error Response', error.response);
+    if (error.response.status === 0) {
+      store.dispatch(errorActions.raiseError('Please check if you are connected to Internet'));
+    }
+    if (error.response.status < 500) {
+      const err = errorExtractor(error.response);
+      store.dispatch(errorActions.raiseWarning(err.message));
+      if (error.response.status === 401) {
+        store.dispatch(userActions.updateToken(null))
       }
-      if(error.response.status < 500) {
-          const err = errorExtractor(error.response);
-          //toast.warn(err.message);
-      } else {
-          const err = errorExtractor(error.response);
-          //toast.error(err.message);
-      }
+    } else {
+      const err = errorExtractor(error.response);
+      store.dispatch(errorActions.raiseError(err.message));
+    }
   }
   throw error;
 };
