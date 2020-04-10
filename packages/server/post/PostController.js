@@ -10,14 +10,13 @@ var Post = require('./Post');
 
 // CREATES A NEW POST
 router.post('/', VerifyToken, function (req, res) {
-    console.log('belo', req)
     Post.create({
         title: req.body.title,
         postContent: req.body.postContent,
         createdBy: req.userName
     },
         function (err, post) {
-            if (err) return res.status(500).send("There was a problem adding the information to the database.");
+            if (err) return res.status(500).send({ message: "There was a problem adding the information to the database." });
             res.status(200).send(post);
         });
 });
@@ -25,7 +24,7 @@ router.post('/', VerifyToken, function (req, res) {
 // RETURNS ALL THE POSTS IN THE DATABASE
 router.get('/', function (req, res) {
     Post.find({}, function (err, posts) {
-        if (err) return res.status(500).send("There was a problem finding the posts.");
+        if (err) return res.status(500).send({ message: "There was a problem finding the posts." });
         res.status(200).send(posts);
     });
 });
@@ -40,10 +39,10 @@ router.get('/:id', function (req, res) {
 });
 
 // DELETES A POST FROM THE DATABASE
-router.delete('/:id', function (req, res) {
+router.delete('/:id', VerifyToken, function (req, res) {
     Post.findByIdAndRemove(req.params.id, function (err, post) {
-        if (err) return res.status(500).send("There was a problem deleting the post.");
-        res.status(200).send("Post: " + post.title + " was deleted.");
+        if (err) return res.status(500).send({ message: "There was a problem deleting the post." });
+        res.status(200).send({ message: 'deleted', id: post._id });
     });
 });
 
