@@ -1,7 +1,13 @@
-describe("Testing the posts API", () => {
+const supertest = require('supertest');
+const server = require('../app');
 
-    it("tests our testing framework if it works", () => {
-        expect(4).toBe(4);
+
+describe("Testing the posts API", () => {
+    it("tests the base route and returns true for status", async done => {
+        const response = await supertest(server).get('/');
+        expect(response.status).toBe(200)
+        expect(response.body.message).toBe('API')
+        done()
     });
 
 })
