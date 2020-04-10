@@ -10,6 +10,9 @@ app.use(bodyParser.json());
 const db = require('./db');
 global.__root = __dirname + '/';
 
+app.get('/', function (req, res) {
+  res.status(200).send({ message: 'API' });
+});
 app.get('/api', function (req, res) {
   res.status(200).send('API works.');
 });
