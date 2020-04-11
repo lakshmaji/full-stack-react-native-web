@@ -1,29 +1,45 @@
+require('dotenv').config();
 const express = require('express');
-const app = express();
 const cors = require('cors');
-const bodyParser = require('body-parser');
+const routes = require('./src/routes');
+const databaseHelper = require('./src/helpers/database');
+// const bodyParser = require('body-parser');
 
-app.use(cors());
-app.options('*', cors());
-app.use(bodyParser.json());
 
-const db = require('./db');
-global.__root = __dirname + '/';
+class App {
+  app;
+  constructor() {
+    this.app = express();
+    this.database();
+    this.middlewares();
+    this.routes();
+  }
 
-app.get('/', function (req, res) {
-  res.status(200).send({ message: 'API' });
-});
-app.get('/api', function (req, res) {
-  res.status(200).send('API works.');
-});
+  database() {
+    databaseHelper.connect();
+  }
 
-var UserController = require(__root + 'user/UserController');
-app.use('/api/users', UserController);
+  middlewares() {
+    this.app.use(cors());
+    this.app.options('*', cors());
+    this.app.use(express.json());
+    // this.app.use(bodyParser.json());
+    // this.app.use(cors());
 
-var AuthController = require(__root + 'auth/AuthController');
-app.use('/api/auth', AuthController);
+    // // this.app.options('*', cors());
+  }
 
-var PostController = require(__root + 'post/PostController');
-app.use('/api/posts', PostController);
+  routes() {
+    this.app.get('/', function (req, res) {
+      res.status(200).send({ message: 'API' });
+    });
+    this.app.get('/api', function (req, res) {
+      res.status(200).send({ message: 'API' });
+    });
 
-module.exports = app;
+    this.app.use('/api', routes);
+
+  }
+}
+
+module.exports = new App().app;
