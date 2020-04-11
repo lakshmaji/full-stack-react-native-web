@@ -1,5 +1,9 @@
 const MemoryDatabaseServer = require('../../src/lib/MemoryDatabaseServer');
 
 module.exports = async () => {
-    await MemoryDatabaseServer.stop();
+    try {
+        await MemoryDatabaseServer.stop();
+    } catch (err) {
+        console.log('Teardown err ', err);
+    }
 };
