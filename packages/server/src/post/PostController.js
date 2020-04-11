@@ -1,4 +1,5 @@
-var Post = require('./Post');
+const Post = require('./Post');
+const Comment = require('./Comment');
 
 class PostController {
 
@@ -48,11 +49,14 @@ class PostController {
     async delete(req, res) {
         try {
             const post = await Post.findById(req.params.id);
-
             if (post) {
-                await post.remove();
+                const removedComment = await Comment.remove({ post: req.params.commentId })
+                console.log('is comment removed ', removedComment)
+                // TODO: must remove all comments
+                if (removedComment) {
+                    await post.remove();
+                }
             }
-
             return res.send({ message: 'deleted', id: post._id });
         } catch (err) {
             return res.status(400).json({ error: 'Post not found' });

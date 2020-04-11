@@ -1,9 +1,17 @@
-var mongoose = require('mongoose');
-var PostSchema = new mongoose.Schema({
-    title: String,
+const mongoose = require('mongoose');
+
+const PostSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: '{PATH} is required'
+    },
     postContent: String,
-    createdBy: String
+    createdBy: String,
+    comments: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }
+    ]
 });
+
 mongoose.model('Post', PostSchema);
 
 module.exports = mongoose.model('Post');
