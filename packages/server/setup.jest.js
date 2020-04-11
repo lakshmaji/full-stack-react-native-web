@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 // Load models since we will not be instantiating our express server.
-require('./post/Post');
-require('./user/User');
+require('./src/post/Post');
+require('./src/user/User');
 
 beforeEach(function (done) {
     /*

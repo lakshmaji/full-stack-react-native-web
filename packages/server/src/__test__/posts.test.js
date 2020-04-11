@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const server = require('../app');
+const server = require('../../app');
 
 let token;
 
@@ -57,13 +57,10 @@ describe("load app instance and get token", () => {
 
         it("Should be able to create a post", async () => {
             // https://github.com/visionmedia/supertest/issues/398#issuecomment-366403045 -> related headers
-            const response = await supertest(server)
-                .post('/api/posts')
-                .send({
-                    title: 'Bhagavad gita',
-                    postContent: 'The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata. ',
-                })
-                .set('Authorization', `Bearer ${token}`);
+            const response = await supertest(server).post('/api/posts').send({
+                title: 'Bhagavad gita',
+                postContent: 'The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata. ',
+            }).set('Authorization', `Bearer ${token}`);
             console.log(response.body)
             expect(response.status).toBe(200);
             // expect(response.type).toBe('application/json');
