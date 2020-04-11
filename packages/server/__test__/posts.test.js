@@ -1,12 +1,14 @@
 const supertest = require('supertest');
-const server = require('../app');
+const app = require('../app');
+
+const PostModel = require('../src/post/Post');
 
 let token;
 
-describe("load app instance and get token", () => {
+describe("Post", () => {
 
     beforeAll(async () => {
-        const response = await supertest(server)
+        const response = await supertest(app)
             .post('/api/auth/register')
             .send({
                 email: 'lakshmaji@gmail.com',
@@ -18,29 +20,9 @@ describe("load app instance and get token", () => {
         }
     })
 
-    // afterAll(async () => {
-    //     if (server.close) {
-    //         await server.close()
-    //     }
-    // })
-
-    // This works too
-    // beforeEach(async () => {
-    //     jest.setTimeout(60000)
-    // })
-
-    describe("App base api check", () => {
-        it("tests the base route and returns true for status", async () => {
-            const response = await supertest(server).get('/');
-            expect(response.status).toBe(200)
-            expect(response.body.message).toBe('API')
-        });
-    })
-
-
-    describe("Testing the posts API", () => {
+    describe("API", () => {
         it("Should not allow to create a post, as auth token was not passed", async () => {
-            const response = await supertest(server).post('/api/posts').send({
+            const response = await supertest(app).post('/api/posts').send({
                 title: 'Bhagavad gita',
                 postContent: 'The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata. ',
             });
@@ -49,7 +31,7 @@ describe("load app instance and get token", () => {
         })
 
         it("Should return empty posts ", async () => {
-            const response = await supertest(server).get('/api/posts');
+            const response = await supertest(app).get('/api/posts');
             expect(response.status).toBe(200);
             expect(response.body);
             expect(response.body.length).toBe(0);
@@ -57,7 +39,7 @@ describe("load app instance and get token", () => {
 
         it("Should be able to create a post", async () => {
             // https://github.com/visionmedia/supertest/issues/398#issuecomment-366403045 -> related headers
-            const response = await supertest(server).post('/api/posts').send({
+            const response = await supertest(app).post('/api/posts').send({
                 title: 'Bhagavad gita',
                 postContent: 'The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata. ',
             }).set('Authorization', `Bearer ${token}`);
@@ -66,10 +48,30 @@ describe("load app instance and get token", () => {
         })
 
         it("Should be able to get posts ", async () => {
-            const response = await supertest(server).get('/api/posts');
-            console.log(response.body)
+            const post = new PostModel({
+                title: 'Javascript by MDN',
+                postContent: 'The static import statement is used to import bindings which are exported by another module.',
+                createdBy: 'Some fake user'
+            })
+            await post.save();
+
+            const response = await supertest(app).get('/api/posts');
             expect(response.status).toBe(200);
-            expect(response.body.length).toBe(0);
+            expect(response.body.length).toBe(1);
+        })
+
+        it('should be able to delete post', async () => {
+
+            const post = new PostModel({
+                title: 'Javascript by MDN',
+                postContent: 'The static import statement is used to import bindings which are exported by another module.',
+                createdBy: 'Some fake user'
+            })
+            await post.save();
+            const response = await supertest(app)
+                .delete(`/api/posts/${post.id}`)
+                .set('Authorization', `Bearer ${token}`)
+            expect(response.status).toBe(200);
         })
 
     })

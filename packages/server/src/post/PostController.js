@@ -28,9 +28,7 @@ class PostController {
     async index(req, res) {
         try {
             const posts = await Post.find();
-            if (posts.length)
-                return res.send(posts);
-            return res.send([]);
+            return res.send(posts);
         } catch (err) {
             return res.status(400).json({ error: 'Some error' });
         }
