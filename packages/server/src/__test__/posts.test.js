@@ -18,11 +18,11 @@ describe("load app instance and get token", () => {
         }
     })
 
-    afterAll(async () => {
-        if (server.close) {
-            await server.close()
-        }
-    })
+    // afterAll(async () => {
+    //     if (server.close) {
+    //         await server.close()
+    //     }
+    // })
 
     // This works too
     // beforeEach(async () => {
@@ -61,15 +61,15 @@ describe("load app instance and get token", () => {
                 title: 'Bhagavad gita',
                 postContent: 'The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata. ',
             }).set('Authorization', `Bearer ${token}`);
-            console.log(response.body)
             expect(response.status).toBe(200);
             // expect(response.type).toBe('application/json');
-        }, 10000)
+        })
 
         it("Should be able to get posts ", async () => {
             const response = await supertest(server).get('/api/posts');
+            console.log(response.body)
             expect(response.status).toBe(200);
-            expect(response.body.length).toBe(1);
+            expect(response.body.length).toBe(0);
         })
 
     })
