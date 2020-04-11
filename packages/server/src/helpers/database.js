@@ -16,16 +16,21 @@ mongoose.Promise = global.Promise;
 
 const connect = async () => {
     if (mongoose.connection.readyState === 0) {
-        await mongoose.connect(
-            process.env.NODE_ENV === 'test' ? global.__DB_URL__ : process.env.DB_URL,
-            {
-                // useNewUrlParser: true,
-                // useCreateIndex: true,
-                // useFindAndModify: false,
-                // useUnifiedTopology: true,
-                useMongoClient: true
-            }
-        );
+        try {
+            await mongoose.connect(
+                process.env.NODE_ENV === 'test' ? global.__DB_URL__ : process.env.DB_URL,
+                {
+                    // useNewUrlParser: true,
+                    // useCreateIndex: true,
+                    // useFindAndModify: false,
+                    // useUnifiedTopology: true,
+                    useMongoClient: true
+                }
+            );
+        }
+        catch (err) {
+            console.log('Monogo connect error ', err);
+        }
     }
 };
 
@@ -37,13 +42,22 @@ const truncate = async () => {
             mongoose.connection.collection(collection).deleteMany({})
         );
 
-        await Promise.all(promises);
+        try {
+            await Promise.all(promises);
+        } catch (err) {
+            console.log('Truncate err ', err);
+        }
     }
 };
 
 const disconnect = async () => {
     if (mongoose.connection.readyState !== 0) {
-        await mongoose.disconnect();
+        try {
+
+            await mongoose.disconnect();
+        } catch (err) {
+            console.log('Mongo disconnet error ', err);
+        }
     }
 };
 
