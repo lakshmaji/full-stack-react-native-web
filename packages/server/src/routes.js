@@ -3,6 +3,7 @@ const express = require('express');
 const AuthController = require('./auth/AuthController');
 const UserController = require('./user/UserController');
 const PostController = require('./post/PostController');
+const CommentController = require('./post/CommentController');
 
 const routes = new express.Router();
 var VerifyToken = require('./auth/VerifyToken');
@@ -23,6 +24,11 @@ routes.get('/posts', PostController.index);
 routes.get('/posts/:id', PostController.show);
 routes.delete('/posts/:id', VerifyToken, PostController.delete);
 routes.put('/posts/:id', PostController.update);
+
+routes.post('/posts/:id/comment', VerifyToken, CommentController.store);
+routes.get('/posts/:id/comment', VerifyToken, CommentController.index);
+routes.delete('/posts/:id/comment/:commentId', VerifyToken, CommentController.delete);
+routes.put('/posts/:id/comment/:commentId', VerifyToken, CommentController.update);
 
 
 module.exports = routes;

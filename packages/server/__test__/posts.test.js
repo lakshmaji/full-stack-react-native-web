@@ -76,4 +76,8 @@ describe("Post", () => {
 
     })
 
+    describe('Model', () => {
+
+    })
+
 })
