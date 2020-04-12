@@ -51,7 +51,6 @@ class PostController {
             const post = await Post.findById(req.params.id);
             if (post) {
                 const removedComment = await Comment.remove({ post: req.params.commentId })
-                console.log('is comment removed ', removedComment)
                 // TODO: must remove all comments
                 if (removedComment) {
                     await post.remove();

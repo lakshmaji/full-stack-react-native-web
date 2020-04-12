@@ -9,24 +9,26 @@ export const useAuthCheck = () => {
     const { token } = useSelector(state => state.user);
 
 
-    const gotoDashboardWithparams = () => {
-        navigateTo(
-            ROUTES.DASHBOARD,
-            {
-                userId: '10k61A0570',
-                themeMode: 'green',
-                stateParamOne: 'this is to check state params'
-            },
-            {
-                filterName: 'vi',
-                filterAge: 12,
-                locations: ['Kanipakam', 'Tirupati', 'Vijayawada', 'Sri Sailam', 'En-ksdg876'],
-                status: 'active'
-            }
-        );
-    }
+    // const gotoDashboardWithparams = () => {
+    //     navigateTo(
+    //         ROUTES.DASHBOARD_WITH_PARAM,
+    //         {
+    //             userId: '10k61A0570',
+    //             themeMode: 'green',
+    //             stateParamOne: 'this is to check state params'
+    //         },
+    //         {
+    //             filterName: 'vi',
+    //             filterAge: 12,
+    //             locations: ['Kanipakam', 'Tirupati', 'Vijayawada', 'Sri Sailam', 'En-ksdg876'],
+    //             status: 'active'
+    //         }
+    //     );
+    // }
 
     useEffect(() => {
+        console.log(routeDetails);
+
         if (token) {
             const returnUrl = getStateByKey('returnUrl');
             if (returnUrl) {
@@ -39,9 +41,18 @@ export const useAuthCheck = () => {
                 // }
                 const { pathname, state, search, params } = returnUrl;
                 navigateTo(pathname, { ...state, ...params }, search);
+            } else if (routeDetails) {
+                const IGNORE_PATHS = ['/login']
+                const { pathname, state, search, params } = routeDetails;
+                if (!IGNORE_PATHS.includes(pathname)) {
+                    navigateTo(pathname, { ...state, ...params }, search);
+                } else {
+                    navigateTo(ROUTES.DASHBOARD);
+                }
+
             } else {
-                // navigateTo(ROUTES.DASHBOARD,);
-                gotoDashboardWithparams()
+                navigateTo(ROUTES.DASHBOARD);
+                // gotoDashboardWithparams()
             }
         } else {
             if (routeDetails) {

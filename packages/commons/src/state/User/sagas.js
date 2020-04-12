@@ -41,10 +41,30 @@ function* login(action) {
 }
 
 
+function* logout(action) {
+  try {
+    const response = yield call(
+      API.post,
+      ApiEndpoints.LOGOUT(),
+      action.payload,
+      action.queryParams,
+      action.successCallback,
+      action.errorCallback
+    );
+    if (response.data && response.data.auth === false) {
+      yield put(userActions.updateToken(response.data.token))
+    }
+  } catch (error) {
+
+  }
+}
+
+
 
 export function* watchUser() {
   yield all([
     takeLatest(types.REGISTER, register),
     takeLatest(types.LOGIN, login),
+    takeLatest(types.LOGOUT, logout),
   ]);
 }

@@ -31,6 +31,20 @@ const login = (
   errorCallback,
 });
 
+const logout = (
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback
+) => ({
+  type: types.LOGOUT,
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback,
+});
 
 
 const updateToken = (token) => ({
@@ -43,5 +57,6 @@ const updateToken = (token) => ({
 export default {
   register,
   updateToken,
-  login
+  login,
+  logout
 };

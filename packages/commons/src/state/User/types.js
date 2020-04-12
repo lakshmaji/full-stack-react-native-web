@@ -1,6 +1,7 @@
 const REGISTER = "user/REGISTER";
 const UPDATE_AUTH_TOKEN = "user/UPDATE_AUTH_TOKEN";
 const LOGIN = "user/LOGIN";
+const LOGOUT = "user/LOGOUT";
 
 export default {
 
@@ -9,5 +10,6 @@ export default {
 
   UPDATE_AUTH_TOKEN,
 
-  LOGIN
+  LOGIN,
+  LOGOUT
 };

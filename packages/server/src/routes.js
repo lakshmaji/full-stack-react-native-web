@@ -11,7 +11,7 @@ var VerifyToken = require('./auth/VerifyToken');
 routes.post('/auth/register', AuthController.store);
 routes.post('/auth/login', AuthController.login);
 routes.get('/auth/me', VerifyToken, AuthController.show);
-routes.get('/auth/logout', AuthController.delete);
+routes.post('/auth/logout', AuthController.delete);
 
 routes.post('/users', UserController.store);
 routes.get('/users', UserController.index);
@@ -26,7 +26,7 @@ routes.delete('/posts/:id', VerifyToken, PostController.delete);
 routes.put('/posts/:id', PostController.update);
 
 routes.post('/posts/:id/comment', VerifyToken, CommentController.store);
-routes.get('/posts/:id/comment', CommentController.index);
+routes.get('/posts/:id/comment', VerifyToken, CommentController.index);
 routes.delete('/posts/:id/comment/:commentId', VerifyToken, CommentController.delete);
 routes.put('/posts/:id/comment/:commentId', VerifyToken, CommentController.update);
 
