@@ -41,6 +41,8 @@ const Post = ({ theme }) => {
                     } else {
                         setSelectedPost(findPost);
                     }
+                } else {
+                    setSelectedPost(findPost);
                 }
             } else {
                 // fetch this particular post details only
