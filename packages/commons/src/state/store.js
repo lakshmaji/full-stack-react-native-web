@@ -21,10 +21,15 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 /** Saga Middleware */
 const sagaMiddleware = createSagaMiddleware();
 
+/**
+ * Logs all actions and states after they are dispatched.
+ */
 const logger = store => next => action => {
-  console.log('dispatching', action)
+  console.group(action.type)
+  console.info('action', action)
   let result = next(action)
   console.log('next state', store.getState())
+  console.groupEnd()
   return result
 }
 
