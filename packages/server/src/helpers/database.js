@@ -15,7 +15,6 @@ mongoose.Promise = global.Promise;
 // mongoose.connection.on('error', console.error.bind(console, 'MongoDB Connection Error...'));
 
 const connect = async () => {
-    console.log('bello url------------ ', process.env.NODE_ENV, process.env.DB_URL)
     if (mongoose.connection.readyState === 0) {
         try {
             await mongoose.connect(
