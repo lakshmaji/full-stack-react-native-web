@@ -27,25 +27,18 @@ export const useNavigation = () => {
             }
             queryParams = Object.keys(queryParams).map(qPKey => `${qPKey}=${queryParams[qPKey]}`).join('&')
         }
+        const locationDescriptor = {
+            pathname: getRouteUrl(url, state),
+            ...(queryParams && {
+                search: queryParams
+            }),
+            state,
+            params: state
+        }
         if (remove) {
-            replace({
-                pathname: getRouteUrl(url, state),
-                ...(queryParams && {
-                    search: queryParams
-                }),
-                state,
-                params: state
-
-            })
+            replace(locationDescriptor)
         } else {
-            push({
-                pathname: getRouteUrl(url, state),
-                ...(queryParams && {
-                    search: queryParams
-                }),
-                state,
-                params: state
-            });
+            push(locationDescriptor);
         }
     };
 
