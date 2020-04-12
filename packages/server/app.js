@@ -4,6 +4,9 @@ const cors = require('cors');
 const routes = require('./src/routes');
 const databaseHelper = require('./src/helpers/database');
 // const bodyParser = require('body-parser');
+const expressWinston = require('express-winston');
+const winston = require('winston');
+const { createLogger } = require('winston');
 
 
 class App {
@@ -13,6 +16,7 @@ class App {
     this.database();
     this.middlewares();
     this.routes();
+    this.afterMiddlewares();
   }
 
   database() {
@@ -24,9 +28,28 @@ class App {
     this.app.options('*', cors());
     this.app.use(express.json());
     // this.app.use(bodyParser.json());
-    // this.app.use(cors());
 
-    // // this.app.options('*', cors());
+    // Place the express-winston logger before the router.
+    this.app.use(expressWinston.logger({
+      transports: [
+        new winston.transports.Console({
+          json: true,
+          colorize: true
+        })
+      ]
+    }));
+  }
+
+  afterMiddlewares() {
+    // Place the express-winston errorLogger after the router.
+    this.app.use(expressWinston.errorLogger({
+      transports: [
+        new winston.transports.Console({
+          json: true,
+          colorize: true
+        })
+      ]
+    }));
   }
 
   routes() {
@@ -38,7 +61,6 @@ class App {
     });
 
     this.app.use('/api', routes);
-
   }
 }
 

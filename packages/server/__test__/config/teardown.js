@@ -1,4 +1,4 @@
-const MemoryDatabaseServer = require('../../src/lib/MemoryDatabaseServer');
+const MemoryDatabaseServer = require('../../src/utils/MemoryDatabaseServer');
 
 module.exports = async () => {
     try {

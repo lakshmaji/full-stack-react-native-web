@@ -1,6 +1,6 @@
 const NodeEnvironment = require('jest-environment-node');
 
-const MemoryDatabaseServer = require('../../src/lib/MemoryDatabaseServer');
+const MemoryDatabaseServer = require('../../src/utils/MemoryDatabaseServer');
 
 class CustomEnvironment extends NodeEnvironment {
     async setup() {
