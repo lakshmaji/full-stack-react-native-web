@@ -78,11 +78,27 @@ const postComment = (
   errorCallback,
 });
 
+const getComment = (
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback
+) => ({
+  type: types.GET_COMMENT,
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback,
+});
+
 
 export default {
   getAllPosts,
   createPost,
   deletePost,
   getPost,
-  postComment
+  postComment,
+  getComment
 };

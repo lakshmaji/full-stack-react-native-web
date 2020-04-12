@@ -38,7 +38,7 @@ class PostController {
     // GETS A SINGLE POST FROM THE DATABASE
     async show(req, res) {
         try {
-            const post = await Post.findById(req.params.id);
+            const post = await Post.findById(req.params.id).populate('comments');
             return res.send(post);
         } catch (err) {
             return res.status(400).json({ error: 'Some error' });

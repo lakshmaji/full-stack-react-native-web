@@ -30,7 +30,7 @@ class CommentController {
     // RETURNS ALL THE COMMENT IN THE DATABASE FOR a GIVEN POST
     async index(req, res) {
         try {
-            const post = await Post.findById(req.params.id);
+            const post = await Post.findById(req.params.id).populate('comments');
             if (post) {
                 return res.send(post.comments);
             } return res.statu(404).json({ message: 'Post Not found' })
