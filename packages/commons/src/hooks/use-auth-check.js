@@ -34,8 +34,12 @@ export const useAuthCheck = () => {
     //     );
     // }
 
-    const navigateWithReplace = (pathname, state, search) => {
-        navigateTo(pathname, state, search, true);
+    const navigateWithReplace = (pathname, state = {}, search = null) => {
+        if (isWeb) {
+            navigateTo(pathname, state, search, true);
+        } else {
+            navigateTo(pathname, state, search);
+        }
     }
 
     useEffect(() => {
