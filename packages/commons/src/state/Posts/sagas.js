@@ -97,7 +97,7 @@ function* postComment(action) {
         type: types.POST_COMMENT_SUCCESS,
         payload: {
           postId: action.payload.id,
-          comment: response.data.comment
+          comment: response.data.data
         }
       })
     }
