@@ -9,6 +9,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.UPDATE_AUTH_TOKEN:
       return { ...state, token: action.payload };
+    case types.LOGOUT:
+      return initialState;
     default:
       return state;
   }

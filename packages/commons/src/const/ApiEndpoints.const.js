@@ -39,5 +39,8 @@ export class ApiEndpoints {
     static LOGIN() {
         return this.removeWhiteSpaces(`auth/login`);
     }
+    static LOGOUT() {
+        return this.removeWhiteSpaces(`auth/logout`);
+    }
 
 }
