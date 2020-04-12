@@ -178,7 +178,6 @@ const Post = ({ theme }) => {
                         <FlatList
                             data={selectedPost.comments}
                             keyExtractor={(item) => {
-                                console.log('bello ', item);
                                 return `${item._id}`;
                             }}
                             renderItem={({ item }) => {

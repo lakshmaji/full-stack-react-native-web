@@ -6,7 +6,7 @@ export const AuthCheck = () => {
     useAuthCheck();
 
     useEffect(() => {
-        console.info('This is a component that will render the app just launches --- and will be used to show some loading indicator')
+        console.info('AuthCheck inital loading componnet --------------------------------- 1 st stack')
     }, [])
 
     return <View>

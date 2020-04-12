@@ -1,14 +1,15 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import Dashboard from 'commons/src/views/Dashboard';
+import Dashboard from 'commons/src/views/DashboardForMobile';
 import { Provider } from 'react-redux';
 import store, { persistor } from 'commons/src/state/store';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { appTheme } from 'commons/src/const/Theme';
-import Login from 'commons/src/views/Login';
+import Login from 'commons/src/views/LoginForMobile';
 import Register from 'commons/src/views/Register';
 import Posts from 'commons/src/views/Posts';
+import PostDetail from 'commons/src/views/Post';
 import CreatePost from 'commons/src/views/CreatePost';
 import SvgExample from 'commons/src/views/SvgExample';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -36,7 +37,8 @@ const getScreenWithNavOptions = (screens, headerShown = true) =>
 const MAIN_SCREENS_WITH_NO_HEADER = {
   SvgExample,
   Posts,
-  CreatePost
+  CreatePost,
+  PostDetail
 };
 
 const MAIN_SCREENS_WITH_HEADER = {
@@ -86,7 +88,7 @@ export default App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <PaperProvider theme={appTheme}>
           <MobileNav>
-            <RootComponent />
+            {/* <RootComponent /> */}
           </MobileNav>
         </PaperProvider>
       </PersistGate>

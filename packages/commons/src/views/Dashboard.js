@@ -19,18 +19,18 @@ const Dashboard = () => {
         getRouteParams
     } = useNavigation();
 
-    useEffect(() => {
-        console.log('Dashboard component mounted')
-    })
+    // useEffect(() => {
+    //     console.log('Dashboard component mounted')
+    // })
 
-    console.log('bello outputs from Dashboard isWeb:::::::::::', isWeb)
-    console.log('bello outputs from Dashboard routeDetails:::::::::::', routeDetails)
-    console.log('bello outputs from Dashboard getState:::::::::::', getState)
-    console.log('bello outputs from Dashboard getStateByKey:::::::::::', getStateByKey('stateParamOne'))
-    console.log('bello outputs from Dashboard getRouteParams:::::::::::', getRouteParams)
-    console.log('bello outputs from Dashboard getRouteParam:::::::::::', getRouteParam('userId'), getRouteParam('themeMode'))
-    console.log('bello outputs from Dashboard getQueryParam:::::::::::', getQueryParam('filterName'), getQueryParam('filterAge'))
-    console.log('bello outputs from Dashboard getQueryParams:::::::::::', getQueryParams)
+    // console.log('bello outputs from Dashboard isWeb:::::::::::', isWeb)
+    // console.log('bello outputs from Dashboard routeDetails:::::::::::', routeDetails)
+    // console.log('bello outputs from Dashboard getState:::::::::::', getState)
+    // console.log('bello outputs from Dashboard getStateByKey:::::::::::', getStateByKey('stateParamOne'))
+    // console.log('bello outputs from Dashboard getRouteParams:::::::::::', getRouteParams)
+    // console.log('bello outputs from Dashboard getRouteParam:::::::::::', getRouteParam('userId'), getRouteParam('themeMode'))
+    // console.log('bello outputs from Dashboard getQueryParam:::::::::::', getQueryParam('filterName'), getQueryParam('filterAge'))
+    // console.log('bello outputs from Dashboard getQueryParams:::::::::::', getQueryParams)
 
     const dispatch = useDispatch();
 

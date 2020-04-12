@@ -25,7 +25,7 @@ export const useNavigation = () => {
     const { navigate, goBack, getParam, } = useContext(NavigationContext);
     const navCxt = useContext(NavigationContext);
 
-    console.log('bello --------------------getParamgetParamgetParam ', navCxt)
+    // console.log('bello --------------------getParamgetParamgetParam ', navCxt)
 
 
     // Experiment One
@@ -81,7 +81,7 @@ export const useNavigation = () => {
     // Note: for every new navigator in the react-native based file , there should be a base / root component whcih should invoke `useAuthCheck` hook 
     // For web application this will not a case as thr root component will always be unique 
     const navigateTo = (url, state = {}, queryParams = null) => {
-        console.log('bello navigate trigger ================', url, state, queryParams)
+        // console.log('bello navigate trigger ================', url, state, queryParams)
         // navigate(url, state);
         const params = {
             ...(state && { ...state }),
