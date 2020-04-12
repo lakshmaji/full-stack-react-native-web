@@ -34,6 +34,10 @@ export const useAuthCheck = () => {
     //     );
     // }
 
+    const navigateWithReplace = (pathname, state, search) => {
+        navigateTo(pathname, state, search, true);
+    }
+
     useEffect(() => {
 
         if (token) {
@@ -45,21 +49,21 @@ export const useAuthCheck = () => {
                 const { pathname, state, search, params } = returnUrl;
                 if (!canIgnoreRoute(pathname)) {
 
-                    navigateTo(pathname, { ...state, ...params }, search);
+                    navigateWithReplace(pathname, { ...state, ...params }, search);
                 } else {
-                    navigateTo(ROUTES.DASHBOARD)
+                    navigateWithReplace(ROUTES.DASHBOARD)
                 }
             } else if (routeDetails) {
                 const { pathname, state, search, params } = routeDetails;
                 console.log('routeDetails', routeDetails);
                 if (!canIgnoreRoute(pathname)) {
 
-                    navigateTo(pathname, { ...state, ...params }, search);
+                    navigateWithReplace(pathname, { ...state, ...params }, search);
                 } else {
-                    navigateTo(ROUTES.DASHBOARD)
+                    navigateWithReplace(ROUTES.DASHBOARD)
                 }
             } else {
-                navigateTo(ROUTES.DASHBOARD);
+                navigateWithReplace(ROUTES.DASHBOARD);
             }
         } else {
             if (routeDetails) {
