@@ -8,7 +8,7 @@ import Posts from 'commons/src/views/Posts';
 import Post from 'commons/src/views/Post';
 
 const RoutesDefinitions = [
-    { path: '/', exact: true, name: 'Home' },
+    { path: '/', exact: true, name: 'Home', component: Dashboard },
     { path: "/dashboard/:userId/theme/:themeMode", name: 'DashboardWithParams', component: Dashboard },
     { path: "/dashboard", name: 'Dashboard', component: Dashboard },
     { path: "/login", name: 'Login', component: Login },
