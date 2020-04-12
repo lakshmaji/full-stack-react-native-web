@@ -3,10 +3,11 @@ import {
     View,
     StyleSheet,
     Text,
-    Image
+    Image,
+    FlatList
 } from "react-native";
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, IconButton, Colors, withTheme, Dialog, Portal, Paragraph } from 'react-native-paper'
+import { Button, IconButton, Colors, withTheme, Dialog, Portal, Paragraph, TextInput } from 'react-native-paper'
 import postActions from '../state/Posts/actions'
 import { useNavigation } from "../hooks/use-navigation";
 import { ROUTES } from "../const/Routes";
@@ -20,6 +21,10 @@ const Post = ({ theme }) => {
     const { navigateTo, navigateBack, getRouteParams: routeParams } = useNavigation();
 
     const posts = useSelector(state => state.posts);
+    const [comment, setComment] = useState('');
+
+    const onChangeText = (value) =>
+        setComment(value);
 
     useEffect(() => {
         let unmounted = false;
@@ -59,6 +64,17 @@ const Post = ({ theme }) => {
         dispatch(postActions.deletePost({ id: selectedPost._id }, {}, {}, _postDeleted))
     }
 
+    const _postComment = () => {
+        if (comment.length) {
+            dispatch(postActions.postComment({
+                id: selectedPost._id,
+                description: comment
+            }, {}, {}, () => setComment('')));
+        }
+    }
+
+
+
     if (!selectedPost) {
         return (
             <View>
@@ -66,6 +82,7 @@ const Post = ({ theme }) => {
             </View>
         );
     }
+    console.log(selectedPost)
     return (
         <>
             <Portal>
@@ -143,6 +160,41 @@ const Post = ({ theme }) => {
                             {selectedPost.postContent}
                         </Text>
 
+                    </View>
+                </View>
+
+                <View>
+                    <View>
+                        <FlatList
+                            data={selectedPost.comments}
+                            keyExtractor={({ item }) => `${item._id}`}
+                            renderItem={({ item }) => {
+                                return <View>
+                                    <Text>{item.description}</Text>
+                                </View>
+                            }}
+                        />
+
+                    </View>
+
+                    <Text>Add Comment</Text>
+                    <View>
+                        <TextInput
+                            mode="outlined"
+                            style={styles.inputContainerStyle}
+                            label="Comment"
+                            placeholder="Type something"
+                            value={comment}
+                            onChangeText={onChangeText}
+                        />
+
+
+                        <View style={styles.row}>
+                            <Button disabled={comment.replace(/\s/g, '').length === 0} mode="contained" onPress={_postComment} style={[styles.button, styles.inputContainerStyle]}>
+                                Post Comment
+                    </Button>
+
+                        </View>
                     </View>
                 </View>
             </View>

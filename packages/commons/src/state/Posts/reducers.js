@@ -12,6 +12,11 @@ const reducer = (state = initialState, action) => {
       return state.filter(ePost => ePost._id !== action.payload.id)
     case types.GET_POST_SUCCESS:
       return [...state, action.payload]
+    case types.POST_COMMENT_SUCCESS:
+      return state.map(ePost => ({
+        ...ePost,
+        comments: action.payload.postId === ePost._id ? [...ePost.comments, action.payload.comment] : ePost.comments
+      }))
     default:
       return state;
   }
