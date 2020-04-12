@@ -40,11 +40,17 @@ const Dashboard = () => {
         throw new Error('Error text');
     }
 
+    const navigateToGallery = () => navigateTo(ROUTES.GALLERY)
+
     const navigateToPosts = () => navigateTo(ROUTES.POSTS);
     return <View>
         <Text> Dashboard</Text>
         <Button mode="contained" onPress={navigateToPosts} style={[styles.button, styles.inputContainerStyle]}>
             List Posts
+        </Button>
+
+        <Button mode="contained" onPress={navigateToGallery} style={[styles.button, styles.inputContainerStyle]}>
+            Gallery
         </Button>
 
     </View>

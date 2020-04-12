@@ -49,6 +49,11 @@ const Posts = ({ theme }) => {
         navigateTo(ROUTES.POST_DETAIL, { id: post._id })
     }
 
+    const navigateToDashboard = () => {
+        // navigateBack()
+        navigateTo(ROUTES.DASHBOARD)
+    }
+
     // if (!(posts && posts.length > 0)) {
     //     return (
     //         <View>
@@ -82,7 +87,7 @@ const Posts = ({ theme }) => {
                 }}
             >
                 <View>
-                    <Button mode="contained" onPress={navigateBack} style={[styles.button, styles.inputContainerStyle]}>
+                    <Button mode="contained" onPress={navigateToDashboard} style={[styles.button, styles.inputContainerStyle]}>
                         Back
                     </Button>
                     <Button mode="contained" onPress={navigateToCreatePost} style={[styles.button, styles.inputContainerStyle]}>

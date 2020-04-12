@@ -5,4 +5,5 @@ export const ROUTES = {
     POSTS: 'Posts',
     CREATE_POST: 'CreatePost',
     POST_DETAIL: 'PostDetail',
+    GALLERY: 'SvgExample',
 };
