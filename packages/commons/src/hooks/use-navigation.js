@@ -15,26 +15,38 @@ const getRouteUrl = (path, params) => {
 
 
 export const useNavigation = () => {
-    const { push, goBack } = useHistory();
+    const { push, goBack, replace } = useHistory();
     const location = useLocation();
     const params = useParams();
     const query = useQuery(location.search);
 
-    const navigateTo = (url, state = {}, queryParams = null) => {
+    const navigateTo = (url, state = {}, queryParams = null, remove = false) => {
         if (queryParams) {
             if (typeof queryParams === 'string') {
                 queryParams = Object.fromEntries(useQuery(queryParams))
             }
             queryParams = Object.keys(queryParams).map(qPKey => `${qPKey}=${queryParams[qPKey]}`).join('&')
         }
-        push({
-            pathname: getRouteUrl(url, state),
-            ...(queryParams && {
-                search: queryParams
-            }),
-            state,
-            params: state
-        });
+        if (remove) {
+            replace({
+                pathname: getRouteUrl(url, state),
+                ...(queryParams && {
+                    search: queryParams
+                }),
+                state,
+                params: state
+
+            })
+        } else {
+            push({
+                pathname: getRouteUrl(url, state),
+                ...(queryParams && {
+                    search: queryParams
+                }),
+                state,
+                params: state
+            });
+        }
     };
 
     const navigateBack = () => {
