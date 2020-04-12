@@ -16,7 +16,7 @@ class App {
     this.database();
     this.middlewares();
     this.routes();
-    this.afterMiddlewares();
+    // this.afterMiddlewares();
   }
 
   database() {
@@ -30,14 +30,14 @@ class App {
     // this.app.use(bodyParser.json());
 
     // Place the express-winston logger before the router.
-    this.app.use(expressWinston.logger({
-      transports: [
-        new winston.transports.Console({
-          json: true,
-          colorize: true
-        })
-      ]
-    }));
+    // this.app.use(expressWinston.logger({
+    //   transports: [
+    //     new winston.transports.Console({
+    //       json: true,
+    //       colorize: true
+    //     })
+    //   ]
+    // }));
   }
 
   afterMiddlewares() {

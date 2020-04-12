@@ -5,7 +5,7 @@ import { useNavigation } from './use-navigation';
 
 const canIgnoreRoute = (pathname) => {
 
-    const IGNORE_PATHS = ['/login', '/register']
+    const IGNORE_PATHS = ['/login', '/register', 'AuthCheck', 'Login']
     if (IGNORE_PATHS.includes(pathname)) {
         return true;
     }
