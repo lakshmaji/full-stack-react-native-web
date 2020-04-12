@@ -24,6 +24,10 @@ export class ApiEndpoints {
         return this.removeWhiteSpaces(`posts/${id}`);
     }
 
+    static POST_COMMENT(id) {
+        return this.removeWhiteSpaces(`posts/${id}/comment`);
+    }
+
     static REGISTER() {
         return this.removeWhiteSpaces(`auth/register`);
     }

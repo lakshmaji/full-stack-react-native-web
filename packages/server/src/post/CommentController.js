@@ -9,18 +9,20 @@ class CommentController {
             const post = await Post.findById(req.params.id);
 
             const comment = new Comment({
-                description: 'Lorem ipsum dolor sit amet, per ut fugit vocibus repudiandae. Sea forensibus disputationi te. Vix unum inani eu',
+                description: req.body.description,
                 createdBy: req.userName,
                 post: post._id
             })
             await comment.save()
-            post.comments.push(comment)
+            post.comments = post.comments.concat([comment])
             await post.save()
 
             return res.json({
-                message: 'Comment has been posted successfully'
+                message: 'Comment has been posted successfully',
+                data: comment
             });
         } catch (err) {
+            console.log(err)
             return res.status(500).json({ message: 'Internal server error' });
         }
     };
