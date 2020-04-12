@@ -3,6 +3,14 @@ import { useSelector } from 'react-redux';
 import { ROUTES } from '../const/Routes';
 import { useNavigation } from './use-navigation';
 
+const canIgnoreRoute = (pathname) => {
+
+    const IGNORE_PATHS = ['/login', '/register']
+    if (IGNORE_PATHS.includes(pathname)) {
+        return true;
+    }
+    return false;
+}
 
 export const useAuthCheck = () => {
     const { navigateTo, isWeb, routeDetails, getStateByKey } = useNavigation();
@@ -27,32 +35,31 @@ export const useAuthCheck = () => {
     // }
 
     useEffect(() => {
-        console.log(routeDetails);
 
         if (token) {
+
             const returnUrl = getStateByKey('returnUrl');
             if (returnUrl) {
-                // if (isWeb) {
-                //     const { pathname, state, search, params } = returnUrl;
-                //     navigateTo(pathname, { ...state, ...params }, search);
-                // } else {
-                //     const { pathname, queryParams, params } = returnUrl;
-                //     navigateTo(pathname, params, queryParams);
-                // }
+                console.log('returnUrl', returnUrl);
+
                 const { pathname, state, search, params } = returnUrl;
-                navigateTo(pathname, { ...state, ...params }, search);
-            } else if (routeDetails) {
-                const IGNORE_PATHS = ['/login']
-                const { pathname, state, search, params } = routeDetails;
-                if (!IGNORE_PATHS.includes(pathname)) {
+                if (!canIgnoreRoute(pathname)) {
+
                     navigateTo(pathname, { ...state, ...params }, search);
                 } else {
-                    navigateTo(ROUTES.DASHBOARD);
+                    navigateTo(ROUTES.DASHBOARD)
                 }
+            } else if (routeDetails) {
+                const { pathname, state, search, params } = routeDetails;
+                console.log('routeDetails', routeDetails);
+                if (!canIgnoreRoute(pathname)) {
 
+                    navigateTo(pathname, { ...state, ...params }, search);
+                } else {
+                    navigateTo(ROUTES.DASHBOARD)
+                }
             } else {
                 navigateTo(ROUTES.DASHBOARD);
-                // gotoDashboardWithparams()
             }
         } else {
             if (routeDetails) {

@@ -33,7 +33,7 @@ const RootComponent = () => {
           />
         ) : null;
       })}
-      <Redirect exact path="/" to="/login" />
+      <Redirect exact path="/" to="/dashboard" />
       <Route
         path="*"
         name="Not Found"
