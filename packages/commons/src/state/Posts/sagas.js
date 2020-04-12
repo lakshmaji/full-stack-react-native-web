@@ -104,10 +104,33 @@ function* postComment(action) {
   } catch (error) { }
 }
 
+function* getComment(action) {
+  try {
+    const response = yield call(
+      API.get,
+      ApiEndpoints.GET_COMMENT(action.payload.id),
+      action.payload,
+      action.queryParams,
+      action.successCallback,
+      action.errorCallback
+    );
+    if (response.data) {
+      yield put({
+        type: types.GET_COMMENT_SUCCESS,
+        payload: {
+          comment: response.data,
+          id: action.payload.id
+        }
+      })
+    }
+  } catch (error) { }
+}
+
 export function* watchUser() {
   yield all([takeLatest(types.GET_ALL_POSTS, getAllPosts)]);
   yield all([takeLatest(types.CREATE_POST, createPost)]);
   yield all([takeLatest(types.DELETE_POST, deletePost)]);
   yield all([takeLatest(types.GET_POST, getPost)]);
   yield all([takeLatest(types.POST_COMMENT, postComment)]);
+  yield all([takeLatest(types.GET_COMMENT, getComment)]);
 }

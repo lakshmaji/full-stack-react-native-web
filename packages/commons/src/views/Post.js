@@ -34,7 +34,14 @@ const Post = ({ theme }) => {
         } else {
             const findPost = posts.find(ePost => ePost._id === routeParams.id)
             if (findPost && !unmounted) {
-                setSelectedPost(findPost);
+                if (findPost.comments.length) {
+                    if (!findPost.comments[0].description) {
+                        // fetch comments
+                        dispatch(postActions.getComment({ id: findPost._id }));
+                    } else {
+                        setSelectedPost(findPost);
+                    }
+                }
             } else {
                 // fetch this particular post details only
                 dispatch(postActions.getPost({ id: routeParams.id }))
@@ -82,7 +89,6 @@ const Post = ({ theme }) => {
             </View>
         );
     }
-    console.log(selectedPost)
     return (
         <>
             <Portal>
@@ -167,8 +173,12 @@ const Post = ({ theme }) => {
                     <View>
                         <FlatList
                             data={selectedPost.comments}
-                            keyExtractor={({ item }) => `${item._id}`}
+                            keyExtractor={(item) => {
+                                console.log('bello ', item);
+                                return `${item._id}`;
+                            }}
                             renderItem={({ item }) => {
+
                                 return <View>
                                     <Text>{item.description}</Text>
                                 </View>

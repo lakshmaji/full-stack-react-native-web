@@ -17,6 +17,11 @@ const reducer = (state = initialState, action) => {
         ...ePost,
         comments: action.payload.postId === ePost._id ? [...ePost.comments, action.payload.comment] : ePost.comments
       }))
+    case types.GET_COMMENT_SUCCESS:
+      return state.map(ePost => ({
+        ...ePost,
+        comments: action.payload.id === ePost._id ? action.payload.comment : ePost.comments
+      }))
     default:
       return state;
   }

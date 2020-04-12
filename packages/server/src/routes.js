@@ -20,13 +20,13 @@ routes.delete('/users/:id', UserController.delete);
 routes.put('/users/:id', UserController.update);
 
 routes.post('/posts', VerifyToken, PostController.store);
-routes.get('/posts', PostController.index);
 routes.get('/posts/:id', PostController.show);
+routes.get('/posts', PostController.index);
 routes.delete('/posts/:id', VerifyToken, PostController.delete);
 routes.put('/posts/:id', PostController.update);
 
 routes.post('/posts/:id/comment', VerifyToken, CommentController.store);
-routes.get('/posts/:id/comment', VerifyToken, CommentController.index);
+routes.get('/posts/:id/comment', CommentController.index);
 routes.delete('/posts/:id/comment/:commentId', VerifyToken, CommentController.delete);
 routes.put('/posts/:id/comment/:commentId', VerifyToken, CommentController.update);
 
