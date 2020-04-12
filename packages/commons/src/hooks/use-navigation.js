@@ -21,11 +21,16 @@ export const useNavigation = () => {
     const query = useQuery(location.search);
 
     const navigateTo = (url, state = {}, queryParams = null) => {
+        if (queryParams) {
+            if (typeof queryParams === 'string') {
+                queryParams = Object.fromEntries(useQuery(queryParams))
+            }
+            queryParams = Object.keys(queryParams).map(qPKey => `${qPKey}=${queryParams[qPKey]}`).join('&')
+        }
         push({
             pathname: getRouteUrl(url, state),
             ...(queryParams && {
-                search:
-                    Object.keys(queryParams).map(qPKey => `${qPKey}=${queryParams[qPKey]}`).join('&')
+                search: queryParams
             }),
             state,
             params: state

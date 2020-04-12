@@ -13,6 +13,7 @@ import { Button, IconButton, Colors, withTheme, Dialog, Portal, Paragraph } from
 import postActions from '../state/Posts/actions'
 import { useNavigation } from "../hooks/use-navigation";
 import { ROUTES } from "../const/Routes";
+import Logout from "../components/Logout";
 
 
 const Posts = ({ theme }) => {
@@ -87,6 +88,7 @@ const Posts = ({ theme }) => {
                 }}
             >
                 <View>
+                    <Logout />
                     <Button mode="contained" onPress={navigateToDashboard} style={[styles.button, styles.inputContainerStyle]}>
                         Back
                     </Button>

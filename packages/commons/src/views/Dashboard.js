@@ -4,7 +4,7 @@ import { useNavigation } from "../hooks/use-navigation";
 import { ROUTES } from "../const/Routes";
 import { Button, withTheme } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import userActions from "../state/User/actions";
+import Logout from "../components/Logout";
 
 const Dashboard = () => {
     const {
@@ -43,10 +43,8 @@ const Dashboard = () => {
 
     const navigateToGallery = () => navigateTo(ROUTES.GALLERY)
 
-    const navigateToPosts = () => navigateTo(ROUTES.POSTS);
-    const _doLogout = () => {
-        dispatch(userActions.logout())
-    }
+    const navigateToPosts = () => navigateTo(ROUTES.POSTS, {}, { author: '123' });
+
     return <View>
         <Text> Dashboard</Text>
         <Button mode="contained" onPress={navigateToPosts} style={[styles.button, styles.inputContainerStyle]}>
@@ -57,9 +55,7 @@ const Dashboard = () => {
             Gallery
         </Button>
 
-        <Button mode="contained" onPress={_doLogout} style={[styles.button, styles.inputContainerStyle]}>
-            Logout
-        </Button>
+        <Logout />
 
     </View>
 };
