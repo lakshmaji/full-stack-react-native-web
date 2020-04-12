@@ -42,41 +42,32 @@ export const useAuthCheck = () => {
         }
     }
 
+    const redirectBackTo = (locationDescriptor) => {
+        const { pathname, state, search, params } = locationDescriptor;
+        if (!canIgnoreRoute(pathname)) {
+
+            navigateWithReplace(pathname, { ...state, ...params }, search);
+        } else {
+            navigateWithReplace(ROUTES.DASHBOARD)
+        }
+    }
+
     useEffect(() => {
-
         if (token) {
-
             const returnUrl = getStateByKey('returnUrl');
             if (returnUrl) {
                 console.log('returnUrl', returnUrl);
-
-                const { pathname, state, search, params } = returnUrl;
-                if (!canIgnoreRoute(pathname)) {
-
-                    navigateWithReplace(pathname, { ...state, ...params }, search);
-                } else {
-                    navigateWithReplace(ROUTES.DASHBOARD)
-                }
+                redirectBackTo(returnUrl)
             } else if (routeDetails) {
-                const { pathname, state, search, params } = routeDetails;
                 console.log('routeDetails', routeDetails);
-                if (!canIgnoreRoute(pathname)) {
-
-                    navigateWithReplace(pathname, { ...state, ...params }, search);
-                } else {
-                    navigateWithReplace(ROUTES.DASHBOARD)
-                }
+                redirectBackTo(routeDetails);
             } else {
                 navigateWithReplace(ROUTES.DASHBOARD);
             }
         } else {
-            if (routeDetails) {
-                navigateTo(ROUTES.LOGIN, {
-                    returnUrl: routeDetails
-                })
-            } else {
-                navigateTo(ROUTES.LOGIN);
-            }
+            navigateTo(ROUTES.LOGIN, {
+                ...(routeDetails && { returnUrl: routeDetails })
+            });
         }
     }, [token])
 };
