@@ -24,7 +24,8 @@ import Stylelint from '../../logos/stylelint.svg';
 import Address from "../../logos/address.svg";
 import Success from "../../logos/success.svg";
 import { Button, List, withTheme, Theme } from 'react-native-paper';
-import { useNavigation } from '../hooks/use-navigation';
+// import { useNavigation } from '../hooks/use-navigation';
+import { useNavigation } from '@lakshmaji/navigation';
 import { ROUTES } from '../const/Routes';
 
 const SvgExample = ({ theme }) => {

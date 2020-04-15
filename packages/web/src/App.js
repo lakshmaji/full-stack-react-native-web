@@ -17,11 +17,9 @@ import store, { persistor } from "commons/src/state/store";
 import { appTheme } from "commons/src/const/Theme";
 import { PersistGate } from "redux-persist/integration/react";
 import { useAuthCheck } from 'commons/src/hooks/use-auth-check'
-import { useLoginCheck } from 'commons/src/hooks/use-login-check'
 
 const RootComponent = () => {
   useAuthCheck();
-  useLoginCheck()
   return <Suspense fallback={""}>
     <Switch>
       {RoutesDefinitions.map((route, idx) => {

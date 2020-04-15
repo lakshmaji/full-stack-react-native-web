@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { ROUTES } from '../const/Routes';
-import { useNavigation } from './use-navigation';
+// import { useNavigation } from './use-navigation';
+import { useNavigation } from '@lakshmaji/navigation';
 
 const canIgnoreRoute = (pathname) => {
 
@@ -35,6 +36,8 @@ export const useAuthCheck = () => {
     // }
 
     const navigateWithReplace = (pathname, state = {}, search = null) => {
+        // This will not save it from the browser back button 
+        // It is good to have some hook in web authentication screens too
         if (isWeb) {
             navigateTo(pathname, state, search, true);
         } else {
@@ -62,6 +65,9 @@ export const useAuthCheck = () => {
                 console.log('routeDetails', routeDetails);
                 redirectBackTo(routeDetails);
             } else {
+                // As per my scenarios this will never be executed
+                // Need to see this by adding some test cases to this
+                // I'm missing some of the checks as I'm verifying this manually
                 navigateWithReplace(ROUTES.DASHBOARD);
             }
         } else {

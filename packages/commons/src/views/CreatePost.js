@@ -9,7 +9,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, KeyboardAvoidingView } from 'react-native';
 import { Button, withTheme, TextInput } from 'react-native-paper';
-import { useNavigation } from '../hooks/use-navigation'
+// import { useNavigation } from '../hooks/use-navigation'
+import { useNavigation } from '@lakshmaji/navigation';
 import { ROUTES } from '../const/Routes'
 import { useDispatch } from 'react-redux'
 import postActions from '../state/Posts/actions'

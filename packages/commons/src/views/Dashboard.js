@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { useNavigation } from "../hooks/use-navigation";
+// import { useNavigation } from "../hooks/use-navigation";
+import { useNavigation } from '@lakshmaji/navigation';
 import { ROUTES } from "../const/Routes";
 import { Button, withTheme } from "react-native-paper";
 import { useDispatch } from "react-redux";
