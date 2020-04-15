@@ -1,22 +1,18 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { ROUTES } from '../const/Routes';
-import { useNavigation } from './use-navigation';
+// import { useNavigation } from './use-navigation';
+import { useNavigation } from '@lakshmaji/navigation';
 
 
 export const useLoginCheck = () => {
-    const { navigateTo, isWeb, routeDetails, getStateByKey } = useNavigation();
+    const { navigateTo } = useNavigation();
 
+    const { token } = useSelector(state => state.user);
 
-    const onBack = (event) => {
-        console.log('back &&&&&&&&&&&&& ', event);
-
-    }
     useEffect(() => {
-
-        window.addEventListener('popstate', onBack)
-        return () => {
-            window.removeEventListener('popstate', onBack)
+        if (token) {
+            navigateTo(ROUTES.DASHBOARD, {}, null, true);
         }
-    }, [])
+    }, [token])
 };
