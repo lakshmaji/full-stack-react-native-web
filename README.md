@@ -1,9 +1,15 @@
-## Instructions
-
-- Clone repository
-- Checkout to **navigation** branch
-
-#### Features
+##  Introduction
+ This is a sample application which contains web/mobile and server code in a single repository (Mono Repo approach). Following are some goals of this application
+ 1. Mono repo.
+ 1. Lets to have common functional logic / common utilities shared across server and client code. 
+ 1. Lets you to have completely different UI for web and mobile. Or you can share the some parts of UI or Similar/Same UI.
+ 
+Following are some of drawbacks
+1. Sharing either server or client code with some of the other team members 
+1. Deployment cycle
+1. More prone to conflicts 
+ 
+## Features
 1. Express server -nodejs application
 1. Server with CORS support  
 1. API integration tests with jest and supertest
@@ -15,6 +21,10 @@
 1. Supports both web and mobile storages
 1. JWT based Authentication and middlewares
 
+## Installation Instructions
+
+- Clone repository
+- Checkout to **navigation** branch
 
 #### Requirements
 |tool/package   |version   |
@@ -27,7 +37,6 @@
 |react-navigation|^4.3.5|
 |react-router-dom|^5.1.2|
 |redux|^4.0.5|
-
 
 
 Note: Not sure whether this app will run on older versions of node (npm)
