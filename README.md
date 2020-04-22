@@ -29,11 +29,11 @@ Note: Not sure whether this app will run on older versions of node (npm)
 `yarn workspace web start`
 
 #### Build
- - Android - Move to android project directory
+- Android - Move to android project directory
  `cd packages/mobile/android`
- - Android - Generate android build - **apk**: 
+- Android - Generate android build - **apk**: 
  `./gradlew assembleRelease`
- - Web - generate build 
+- Web - generate build 
  `yarn workspace web build`
 
 
