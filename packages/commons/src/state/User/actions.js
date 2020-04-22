@@ -1,36 +1,62 @@
 import types from "./types";
 
-const login = (payload, options, queryParams, successCallback, errorCallback) => ({
-  type: types.LOGIN_REQUEST,
+
+const register = (
   payload,
   options,
   queryParams,
   successCallback,
   errorCallback
+) => ({
+  type: types.REGISTER,
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback,
 });
 
-const fetchAccountDetails = (payload, options, queryParams, successCallback, errorCallback) => ({
-  type: types.FETCH_ACCOUNT_DETAILS_REQUEST,
+const login = (
   payload,
   options,
   queryParams,
   successCallback,
   errorCallback
+) => ({
+  type: types.LOGIN,
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback,
 });
 
-const register = (payload, options, queryParams, successCallback, errorCallback) => ({
-  type: types.REGISTER_REQUEST,
+const logout = (
   payload,
   options,
   queryParams,
   successCallback,
   errorCallback
+) => ({
+  type: types.LOGOUT,
+  payload,
+  options,
+  queryParams,
+  successCallback,
+  errorCallback,
 });
+
+
+const updateToken = (token) => ({
+  type: types.UPDATE_AUTH_TOKEN,
+  payload: token,
+})
 
 
 
 export default {
+  register,
+  updateToken,
   login,
-  fetchAccountDetails,
-  register
+  logout
 };
